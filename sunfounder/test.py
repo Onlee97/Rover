@@ -120,6 +120,17 @@ def fwTurn(c):
             fwAngle += 45
     return fwAngle
 
+bwSpeed = 0
+def bwDrive(c):
+    global bwSpeed
+    if (c == "stop"):
+        bwSpeed = 0
+    elif (c == "up" and bwSpeed != 100):
+        c += 25
+    elif (c == "down" and bwSpeed != 0):
+        c -= 25
+    return bwSpeed
+
 
 if __name__ == '__main__':
 #	try:
@@ -130,10 +141,22 @@ if __name__ == '__main__':
         char = screen.getch()
         if char == ord('q'):
             break
+        elif char == ord('e'):
+            print('e')
+            bw.stop()
+            time.sleep(delaytime)
         elif char == ord('w'):
             print('w')
+            bw.speed = 70
+#            bw.forward()
+            bw.backward()
+            time.sleep(delaytime)
         elif char == ord('s'):
             print('s')
+            bw.speed = 70
+#            bw.backward()
+            bw.forward()
+            time.sleep(delaytime)
         elif char == ord('a'):
             print('a')
             fw.turn(fwTurn("left"))
