@@ -108,6 +108,19 @@ curses.noecho()
 curses.cbreak()
 screen.keypad(True)
 delaytime = 0.2
+
+fwAngle = 90
+def fwTurn(c):
+    global fwAngle
+    if (c == "left"):
+        if (fwAngle != 45):
+            fwAngle -= 45
+    if (c == "right"):
+        if (fwAngle != 135):
+            fwAngle += 45
+    return fwAngle
+
+
 if __name__ == '__main__':
 #	try:
 #		start_avoidance()
@@ -123,13 +136,16 @@ if __name__ == '__main__':
             print('s')
         elif char == ord('a'):
             print('a')
-            fw.turn(135)
+            fw.turn(fwTurn("left"))
+            time.sleep(delaytime)
         elif char == ord('d'):
             print('d')
-            fw.turn(45)
+            fw.turn(fwTurn("right"))
+            time.sleep(delaytime)
     curses.nocbreak(); screen.keypad(0); curses.echo()
     curses.endwin()
     stop()
+    time.sleep(delaytime)
 		#		fw.turn(opposite_angle())
 		#		bw.backward()
 		#		bw.speed = backward_speed
