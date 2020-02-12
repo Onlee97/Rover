@@ -11,18 +11,20 @@
 **********************************************************************
 '''
 
-from SunFounder_Ultrasonic_Avoidance import Ultrasonic_Avoidance
+#from SunFounder_Ultrasonic_Avoidance import Ultrasonic_Avoidance
 from picar import front_wheels
 from picar import back_wheels
 import time
 import picar
 import random
+import curses
+import time
 
-force_turning = 0    # 0 = random direction, 1 = force left, 2 = force right, 3 = orderdly
+#force_turning = 0    # 0 = random direction, 1 = force left, 2 = force right, 3 = orderdly
 
 picar.setup()
 
-ua = Ultrasonic_Avoidance.Ultrasonic_Avoidance(20)
+#ua = Ultrasonic_Avoidance.Ultrasonic_Avoidance(20)
 fw = front_wheels.Front_Wheels(db='config')
 bw = back_wheels.Back_Wheels(db='config')
 fw.turning_max = 45
@@ -101,8 +103,28 @@ def stop():
 	bw.stop()
 	fw.turn_straight()
 
+screen = curses.initscr()
+curses.noecho()
+curses.cbreak()
+screen.keypad(True)
+delaytime = 0.2
 if __name__ == '__main__':
-	try:
-		start_avoidance()
-	except KeyboardInterrupt:
-		stop()
+#	try:
+#		start_avoidance()
+#	except KeyboardInterrupt:
+#		stop()
+    while(True):
+        char = screen.getch()
+        if char == ord('q'):
+            break
+        elif char == ord('w'):
+            print('w')
+        elif char == ord('s'):
+            print('s')
+        elif char == ord('a'):
+            print('a')
+        elif char == ord('d'):
+            print('d')
+    curses.nocbreak(); screen.keypad(0); curses.echo()
+    curses.endwin()
+
