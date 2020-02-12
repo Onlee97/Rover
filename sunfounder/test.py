@@ -120,7 +120,7 @@ def fwTurn(c):
             fwAngle += 45
     return fwAngle
 
-bwSpeed = 0
+bwSpeed = 100 #Can only range from 0 to 100
 def bwDrive(c):
     global bwSpeed
     if (c == "stop"):
@@ -147,13 +147,13 @@ if __name__ == '__main__':
             time.sleep(delaytime)
         elif char == ord('w'):
             print('w')
-            bw.speed = 70
+            bw.speed = bwSpeed
 #            bw.forward()
             bw.backward()
             time.sleep(delaytime)
         elif char == ord('s'):
             print('s')
-            bw.speed = 70
+            bw.speed = bwSpeed
 #            bw.backward()
             bw.forward()
             time.sleep(delaytime)
