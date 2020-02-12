@@ -123,8 +123,17 @@ if __name__ == '__main__':
             print('s')
         elif char == ord('a'):
             print('a')
+            fw.turn(135)
         elif char == ord('d'):
             print('d')
+            fw.turn(45)
     curses.nocbreak(); screen.keypad(0); curses.echo()
     curses.endwin()
-
+    stop()
+		#		fw.turn(opposite_angle())
+		#		bw.backward()
+		#		bw.speed = backward_speed
+		#		time.sleep(1)
+		#		fw.turn(opposite_angle())
+		#		bw.forward()
+		#		time.sleep(1)
