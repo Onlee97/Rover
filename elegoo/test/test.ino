@@ -19,6 +19,11 @@
 #define IN3 9
 #define IN4 11
 
+#define FORWARD 4
+#define BACKWARD 3
+#define LEFT 2
+#define RIGHT 1
+
 void forward(){ 
   digitalWrite(ENA,HIGH); //enable L298n A channel
   digitalWrite(ENB,HIGH); //enable L298n B channel
@@ -26,7 +31,7 @@ void forward(){
   digitalWrite(IN2,LOW);  //set IN2 low level
   digitalWrite(IN3,LOW);  //set IN3 low level
   digitalWrite(IN4,HIGH); //set IN4 hight level
-  Serial.println("Forward");//send message to serial monitor
+  Serial.println("Forward");//send message to serial monitor`
 }
 
 void back(){
@@ -59,6 +64,16 @@ void right(){
   Serial.println("Right");
 }
 
+void stop(){
+  digitalWrite(ENA,LOW);
+  digitalWrite(ENB,LOW);
+  digitalWrite(IN1,LOW);
+  digitalWrite(IN2,LOW);
+  digitalWrite(IN3,LOW);
+  digitalWrite(IN4,LOW);
+  Serial.println("Stop");
+}
+
 //before execute loop() function, 
 //setup() function will execute first and only execute once
 void setup() {
@@ -69,16 +84,27 @@ void setup() {
   pinMode(IN4,OUTPUT);
   pinMode(ENA,OUTPUT);
   pinMode(ENB,OUTPUT);
+  pinMode(FORWARD, INPUT);
+  pinMode(BACKWARD, INPUT);
+  pinMode(LEFT, INPUT);
+  pinMode(RIGHT, INPUT);
 }
 
 //Repeat execution
 void loop() {
-  forward();  //go forward
-  delay(1000);//delay 1000 ms
-  back();     //go back
-  delay(1000);
-  left();     //turning left
-  delay(1000);
-  right();    //turning right
-  delay(1000);
+  if (digitalRead(FORWARD) == HIGH){
+    forward();  //go forward  
+  }
+  else if (digitalRead(BACKWARD) == HIGH){
+    back();  //go forward  
+  }
+  else if (digitalRead(LEFT) == HIGH){
+    left();  //go forward  
+  }  
+  else if (digitalRead(RIGHT) == HIGH){
+    right();  //go forward  
+  }
+  else {
+
+  }
 }
