@@ -12,8 +12,8 @@
 
 
 //define L298n module IO Pin
-#define ENA 5
-#define ENB 6
+#define ENA 5 //Left
+#define ENB 6 //Right
 #define IN1 7
 #define IN2 8
 #define IN3 9
@@ -45,7 +45,7 @@ void back(){
 }
 
 void left(){
-  digitalWrite(ENA,HIGH);
+  digitalWrite(ENA,LOW);
   digitalWrite(ENB,HIGH);
   digitalWrite(IN1,LOW);
   digitalWrite(IN2,HIGH);
@@ -56,7 +56,7 @@ void left(){
 
 void right(){
   digitalWrite(ENA,HIGH);
-  digitalWrite(ENB,HIGH);
+  digitalWrite(ENB,LOW);
   digitalWrite(IN1,HIGH);
   digitalWrite(IN2,LOW);
   digitalWrite(IN3,HIGH);
