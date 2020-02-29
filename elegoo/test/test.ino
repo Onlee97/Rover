@@ -19,10 +19,10 @@
 #define IN3 9
 #define IN4 11
 
-#define FORWARD 4
+#define FORWARD 2
 #define BACKWARD 3
-#define LEFT 2
-#define RIGHT 1
+#define LEFT 4
+#define RIGHT 10
 
 void forward(){ 
   digitalWrite(ENA,HIGH); //enable L298n A channel
@@ -94,17 +94,23 @@ void setup() {
 void loop() {
   if (digitalRead(FORWARD) == HIGH){
     forward();  //go forward  
+    Serial.println("forward");
   }
   else if (digitalRead(BACKWARD) == HIGH){
+    Serial.println("backward");
     back();  //go forward  
   }
   else if (digitalRead(LEFT) == HIGH){
+    Serial.println("left");
     left();  //go forward  
   }  
   else if (digitalRead(RIGHT) == HIGH){
+    Serial.println("right");
     right();  //go forward  
   }
   else {
+  	stop();
+  	Serial.println("Stop");
 
   }
 }
