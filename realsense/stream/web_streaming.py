@@ -70,7 +70,7 @@ def captureFrames():
 		key = cv2.waitKey(30) & 0xff
 		if key == 27:
 			break
-
+	cv2.destroyAllWindows()
 	video_capture.release()
         
 def encodeFrame():
