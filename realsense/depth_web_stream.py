@@ -39,10 +39,12 @@ def captureFrames():
 
 			# Stack both images horizontally
 			images = np.hstack((color_image, depth_colormap))
+			
 
-		#	return_key, frame = video_capture.read()
-		#	if not return_key:
-		#		break
+			#Downscale image for faster streaming
+			newWidth = int(images.shape[1] / 2)
+			newHeight = int(images.shape[0] / 2)
+			images = cv2.resize(images, (newWidth, newHeight), interpolation = cv2.INTER_AREA)			
 
 			# Create a copy of the frame and store it in the global variable,
 			# with thread safe access
