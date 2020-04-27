@@ -26,7 +26,7 @@ void forward(){
 	digitalWrite(IN2,LOW);  //set IN2 low level
 	digitalWrite(IN3,LOW);  //set IN3 low level
 	digitalWrite(IN4,HIGH); //set IN4 hight level
-	Serial.println("Forward");//send message to serial monitor`
+//	Serial.println("Forward");//send message to serial monitor`
 }
 
 void back(){
@@ -36,7 +36,7 @@ void back(){
 	digitalWrite(IN2,HIGH);
 	digitalWrite(IN3,HIGH);
 	digitalWrite(IN4,LOW);
-	Serial.println("Back");
+//	Serial.println("Back");
 }
 
 void left(){
@@ -46,7 +46,7 @@ void left(){
 	digitalWrite(IN2,HIGH);
 	digitalWrite(IN3,LOW);
 	digitalWrite(IN4,HIGH); 
-	Serial.println("Left");
+//	Serial.println("Left");
 }
 
 void right(){
@@ -56,7 +56,7 @@ void right(){
 	digitalWrite(IN2,LOW);
 	digitalWrite(IN3,HIGH);
 	digitalWrite(IN4,LOW);
-	Serial.println("Right");
+//	Serial.println("Right");
 }
 
 void stop(){
@@ -66,7 +66,7 @@ void stop(){
 	digitalWrite(IN2,LOW);
 	digitalWrite(IN3,LOW);
 	digitalWrite(IN4,LOW);
-	Serial.println("Stop");
+//	Serial.println("Stop");
 }
 
 //before execute loop() function, 
