@@ -19,59 +19,54 @@
 #define IN3 9
 #define IN4 11
 
-#define FORWARD 2
-#define BACKWARD 3
-#define LEFT 4
-#define RIGHT 10
-
 void forward(){ 
-  digitalWrite(ENA,HIGH); //enable L298n A channel
-  digitalWrite(ENB,HIGH); //enable L298n B channel
-  digitalWrite(IN1,HIGH); //set IN1 hight level
-  digitalWrite(IN2,LOW);  //set IN2 low level
-  digitalWrite(IN3,LOW);  //set IN3 low level
-  digitalWrite(IN4,HIGH); //set IN4 hight level
-  Serial.println("Forward");//send message to serial monitor`
+	digitalWrite(ENA,HIGH); //enable L298n A channel
+	digitalWrite(ENB,HIGH); //enable L298n B channel
+	digitalWrite(IN1,HIGH); //set IN1 hight level
+	digitalWrite(IN2,LOW);  //set IN2 low level
+	digitalWrite(IN3,LOW);  //set IN3 low level
+	digitalWrite(IN4,HIGH); //set IN4 hight level
+	Serial.println("Forward");//send message to serial monitor`
 }
 
 void back(){
-  digitalWrite(ENA,HIGH);
-  digitalWrite(ENB,HIGH);
-  digitalWrite(IN1,LOW);
-  digitalWrite(IN2,HIGH);
-  digitalWrite(IN3,HIGH);
-  digitalWrite(IN4,LOW);
-  Serial.println("Back");
+	digitalWrite(ENA,HIGH);
+	digitalWrite(ENB,HIGH);
+	digitalWrite(IN1,LOW);
+	digitalWrite(IN2,HIGH);
+	digitalWrite(IN3,HIGH);
+	digitalWrite(IN4,LOW);
+	Serial.println("Back");
 }
 
 void left(){
-  digitalWrite(ENA,LOW);
-  digitalWrite(ENB,HIGH);
-  digitalWrite(IN1,LOW);
-  digitalWrite(IN2,HIGH);
-  digitalWrite(IN3,LOW);
-  digitalWrite(IN4,HIGH); 
-  Serial.println("Left");
+	digitalWrite(ENA,LOW);
+	digitalWrite(ENB,HIGH);
+	digitalWrite(IN1,LOW);
+	digitalWrite(IN2,HIGH);
+	digitalWrite(IN3,LOW);
+	digitalWrite(IN4,HIGH); 
+	Serial.println("Left");
 }
 
 void right(){
-  digitalWrite(ENA,HIGH);
-  digitalWrite(ENB,LOW);
-  digitalWrite(IN1,HIGH);
-  digitalWrite(IN2,LOW);
-  digitalWrite(IN3,HIGH);
-  digitalWrite(IN4,LOW);
-  Serial.println("Right");
+	digitalWrite(ENA,HIGH);
+	digitalWrite(ENB,LOW);
+	digitalWrite(IN1,HIGH);
+	digitalWrite(IN2,LOW);
+	digitalWrite(IN3,HIGH);
+	digitalWrite(IN4,LOW);
+	Serial.println("Right");
 }
 
 void stop(){
-  digitalWrite(ENA,LOW);
-  digitalWrite(ENB,LOW);
-  digitalWrite(IN1,LOW);
-  digitalWrite(IN2,LOW);
-  digitalWrite(IN3,LOW);
-  digitalWrite(IN4,LOW);
-  Serial.println("Stop");
+	digitalWrite(ENA,LOW);
+	digitalWrite(ENB,LOW);
+	digitalWrite(IN1,LOW);
+	digitalWrite(IN2,LOW);
+	digitalWrite(IN3,LOW);
+	digitalWrite(IN4,LOW);
+	Serial.println("Stop");
 }
 
 //before execute loop() function, 
@@ -84,32 +79,52 @@ void setup() {
   pinMode(IN4,OUTPUT);
   pinMode(ENA,OUTPUT);
   pinMode(ENB,OUTPUT);
-  pinMode(FORWARD, INPUT);
-  pinMode(BACKWARD, INPUT);
-  pinMode(LEFT, INPUT);
-  pinMode(RIGHT, INPUT);
 }
 
 //Repeat execution
+char controlInput = 0;
+enum direction {Forward, Backward, Left, Right, Stop};
+direction dir = Stop;
+
 void loop() {
-  if (digitalRead(FORWARD) == HIGH){
-    forward();  //go forward  
-    Serial.println("forward");
-  }
-  else if (digitalRead(BACKWARD) == HIGH){
-    Serial.println("backward");
-    back();  //go forward  
-  }
-  else if (digitalRead(LEFT) == HIGH){
-    Serial.println("left");
-    left();  //go forward  
-  }  
-  else if (digitalRead(RIGHT) == HIGH){
-    Serial.println("right");
-    right();  //go forward  
-  }
-  else {
-  	stop();
-  	Serial.println("Stop");
-  }
+	if (Serial.available() > 0){
+		controlInput = Serial.read();		
+		switch(controlInput){
+			case 'w':
+				dir = Forward;
+				break;
+			case 's':
+				dir = Backward;
+				break;
+			case 'a':
+				dir = Left;
+				break;
+			case 'd':
+				dir = Right;
+				break;
+			case 'q':
+				dir = Stop;
+				break;
+		}	
+	}
+	switch(dir){
+		case Forward:
+			forward();
+			break;
+		case Backward:
+			back();
+			break;
+		case Left:
+			left();
+			break;
+		case Right:
+			right();
+			break;
+		case Stop:
+			stop();
+			break;
+		default:
+			stop();
+			break;
+	}
 }
