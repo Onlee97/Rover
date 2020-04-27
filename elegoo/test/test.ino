@@ -12,12 +12,17 @@
 
 
 //define L298n module IO Pin
-#define ENA 5
-#define ENB 6
+#define ENA 5 //Left
+#define ENB 6 //Right
 #define IN1 7
 #define IN2 8
 #define IN3 9
 #define IN4 11
+
+#define FORWARD 2
+#define BACKWARD 3
+#define LEFT 4
+#define RIGHT 10
 
 void forward(){ 
   digitalWrite(ENA,HIGH); //enable L298n A channel
@@ -26,7 +31,7 @@ void forward(){
   digitalWrite(IN2,LOW);  //set IN2 low level
   digitalWrite(IN3,LOW);  //set IN3 low level
   digitalWrite(IN4,HIGH); //set IN4 hight level
-  Serial.println("Forward");//send message to serial monitor
+  Serial.println("Forward");//send message to serial monitor`
 }
 
 void back(){
@@ -40,7 +45,7 @@ void back(){
 }
 
 void left(){
-  digitalWrite(ENA,HIGH);
+  digitalWrite(ENA,LOW);
   digitalWrite(ENB,HIGH);
   digitalWrite(IN1,LOW);
   digitalWrite(IN2,HIGH);
@@ -51,12 +56,22 @@ void left(){
 
 void right(){
   digitalWrite(ENA,HIGH);
-  digitalWrite(ENB,HIGH);
+  digitalWrite(ENB,LOW);
   digitalWrite(IN1,HIGH);
   digitalWrite(IN2,LOW);
   digitalWrite(IN3,HIGH);
   digitalWrite(IN4,LOW);
   Serial.println("Right");
+}
+
+void stop(){
+  digitalWrite(ENA,LOW);
+  digitalWrite(ENB,LOW);
+  digitalWrite(IN1,LOW);
+  digitalWrite(IN2,LOW);
+  digitalWrite(IN3,LOW);
+  digitalWrite(IN4,LOW);
+  Serial.println("Stop");
 }
 
 //before execute loop() function, 
@@ -69,16 +84,32 @@ void setup() {
   pinMode(IN4,OUTPUT);
   pinMode(ENA,OUTPUT);
   pinMode(ENB,OUTPUT);
+  pinMode(FORWARD, INPUT);
+  pinMode(BACKWARD, INPUT);
+  pinMode(LEFT, INPUT);
+  pinMode(RIGHT, INPUT);
 }
 
 //Repeat execution
 void loop() {
-  forward();  //go forward
-  delay(1000);//delay 1000 ms
-  back();     //go back
-  delay(1000);
-  left();     //turning left
-  delay(1000);
-  right();    //turning right
-  delay(1000);
+  if (digitalRead(FORWARD) == HIGH){
+    forward();  //go forward  
+    Serial.println("forward");
+  }
+  else if (digitalRead(BACKWARD) == HIGH){
+    Serial.println("backward");
+    back();  //go forward  
+  }
+  else if (digitalRead(LEFT) == HIGH){
+    Serial.println("left");
+    left();  //go forward  
+  }  
+  else if (digitalRead(RIGHT) == HIGH){
+    Serial.println("right");
+    right();  //go forward  
+  }
+  else {
+  	stop();
+  	Serial.println("Stop");
+  }
 }
