@@ -4,12 +4,15 @@ This repo contains the core codes of the robot, and also neccessary instruction 
 
 **Hardware** 
 *Version 3*
-The robot has 4 DC motors, controlled by an L298N (Motor Driver)
-The Motor Driver is controlled by an Arduino, which can generate PWM signal to control the speed of Motor
-The CPU of the robot is a *Jetson Nano*, which performs core processing tasks, and communicate with the Arduino via Serial
+The robot has 4 DC motors, controlled by an L298N (Motor Driver)\
+The Motor Driver is controlled by an Arduino, which can generate PWM signal to control the speed of Motor.\
+The CPU of the robot is a *Jetson Nano*, which performs core processing tasks, and communicate with the Arduino via Serial.\
 
 **Software**
 *Prerequisite*
-OpenCV
-ROS
-Intel Realsense
+OpenCV.\
+ROS.\
+Intel Realsense.\
+
+**Flashing the Jetson OS**
+(https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit)
