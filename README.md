@@ -21,6 +21,26 @@ Using NVIDIA L4T32.3.1, JetPack 4.3
 **Install OpenCV**\
 The JetPack (Jetson OS) comes with a built in OpenCV (installed in /usr/ folder). However, this OpenCV doesn't come with CUDA support. In order to have a more customized OpenCV, we should built it from source.\
 *Step 1:*
-Expand Swap memory. Jetson comes with only 4GB of RAM, and therefore can crash during the build process. Swap memory can be used as suppliment for RAM when needed.
+Expand Swap memory. Jetson comes with only 4GB of RAM, and therefore can crash during the build process. Swap memory can be used as suppliment for RAM when needed.\
+```bash
+sudo apt-get install zram-config
+sudo gedit /usr/bin/init-zram-swapping
+```
+Replace this line\
+```bash
+mem=$(((totalmem / 2 / ${NRDEVICES}) * 1024))
+```
+With this line\
+```bash
+mem=$(((totalmem / ${NRDEVICES}) * 1024))
+```
+Reboot to apply change
+*Step 2:*
+```bash
+$ git clone https://github.com/JetsonHacksNano/buildOpenCV
+$ cd buildOpenCV
+$ ./buildOpenCV.sh |& tee openCV_build.log
+```
+
 
 
