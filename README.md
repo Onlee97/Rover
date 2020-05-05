@@ -35,6 +35,7 @@ With this line
 mem=$(((totalmem / ${NRDEVICES}) * 1024))
 ```
 Reboot to apply change
+
 *Step 2:*
 ```bash
 $ git clone https://github.com/JetsonHacksNano/buildOpenCV
