@@ -19,7 +19,7 @@ Intel Realsense.
 Using NVIDIA L4T32.3.1, JetPack 4.3 
 
 **Install OpenCV**\
-The JetPack (Jetson OS) comes with a built in OpenCV (installed in /usr/ folder). However, this OpenCV doesn't come with CUDA support. In order to have a more customized OpenCV, we should built it from source.
+The JetPack (Jetson OS) comes with a built in OpenCV (installed in /usr/ folder). However, this OpenCV doesn't come with CUDA support. In order to have a more customized OpenCV, we should built it from source. The building process can take about 2.5 hours
 
 *Step 0:*
 Supply Jetson with a 5V, 3A power supply. Based on my experience, using a 5V 1.5A may cause the jetson to crash in the building process, which led to me having to reflash the OS and start the process again.
@@ -27,8 +27,8 @@ Supply Jetson with a 5V, 3A power supply. Based on my experience, using a 5V 1.5
 *Step 1:*
 Expand Swap memory. Jetson comes with only 4GB of RAM, and therefore can crash during the build process. Swap memory can be used as suppliment for RAM when needed.
 ```bash
-sudo apt-get install zram-config
-sudo gedit /usr/bin/init-zram-swapping
+$ sudo apt-get install zram-config
+$ sudo gedit /usr/bin/init-zram-swapping
 ```
 Replace this line
 ```bash
@@ -47,6 +47,16 @@ $ cd buildOpenCV
 $ ./buildOpenCV.sh |& tee openCV_build.log
 ```
 Reference: https://www.jetsonhacks.com/2019/11/22/opencv-4-cuda-on-jetson-nano/
+
+**Install Intel Realsense SDK**\
+The SDK are neccessary for the jetson to interact with the Depth Camera. The Depth Camera provide a 3D point cloud data which is very beneficial in multiple application. There are convienient way to install the SDK. However, if we want the library to support **Python** and **CUDA**, then we have to build from source.
+
+```bash
+$ git clone https://github.com/JetsonHacksNano/installLibrealsense
+$ cd installLibrealsense
+$ ./buildLibrealsense.sh
+```
+
 
 
 
