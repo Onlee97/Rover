@@ -1,7 +1,7 @@
 //www.elegoo.com
 
 //    The direction of the car's movement
-//  ENA   ENB   IN1   IN2   IN3   IN4   Description  
+//  ENR   ENL   R1   R2   L1   L2   Description  
 //  HIGH  HIGH  HIGH  LOW   LOW   HIGH  Car is runing forward
 //  HIGH  HIGH  LOW   HIGH  HIGH  LOW   Car is runing back
 //  HIGH  HIGH  LOW   HIGH  LOW   HIGH  Car is turning left
@@ -9,76 +9,143 @@
 //  HIGH  HIGH  LOW   LOW   LOW   LOW   Car is stoped
 //  HIGH  HIGH  HIGH  HIGH  HIGH  HIGH  Car is stoped
 //  LOW   LOW   N/A   N/A   N/A   N/A   Car is stoped
-
+#include <string.h>
 
 //define L298n module IO Pin
-#define ENA 5
-#define ENB 6
-#define IN1 7
-#define IN2 8
-#define IN3 9
-#define IN4 11
+#define ENR 5 //Right enable
+#define ENL 6 //Left enable
+#define R1 7
+#define R2 8
+#define L1 9
+#define L2 11
 
-void forward(){ 
-  digitalWrite(ENA,HIGH); //enable L298n A channel
-  digitalWrite(ENB,HIGH); //enable L298n B channel
-  digitalWrite(IN1,HIGH); //set IN1 hight level
-  digitalWrite(IN2,LOW);  //set IN2 low level
-  digitalWrite(IN3,LOW);  //set IN3 low level
-  digitalWrite(IN4,HIGH); //set IN4 hight level
-  Serial.println("Forward");//send message to serial monitor
+void forward(int speed){ 
+	analogWrite(ENR, speed);
+	analogWrite(ENL, speed);
+	digitalWrite(R1,LOW); //set R1 hight level
+	digitalWrite(R2,HIGH);  //set R2 low level
+	digitalWrite(L1,HIGH);  //set L1 low level
+	digitalWrite(L2,LOW); //set L2 hight level
 }
 
-void back(){
-  digitalWrite(ENA,HIGH);
-  digitalWrite(ENB,HIGH);
-  digitalWrite(IN1,LOW);
-  digitalWrite(IN2,HIGH);
-  digitalWrite(IN3,HIGH);
-  digitalWrite(IN4,LOW);
-  Serial.println("Back");
+void back(int speed){
+	analogWrite(ENR, speed);
+	analogWrite(ENL, speed);
+	digitalWrite(R1,HIGH);
+	digitalWrite(R2,LOW);
+	digitalWrite(L1,LOW);
+	digitalWrite(L2,HIGH);
 }
 
-void left(){
-  digitalWrite(ENA,HIGH);
-  digitalWrite(ENB,HIGH);
-  digitalWrite(IN1,LOW);
-  digitalWrite(IN2,HIGH);
-  digitalWrite(IN3,LOW);
-  digitalWrite(IN4,HIGH); 
-  Serial.println("Left");
+void right(int speed){
+	analogWrite(ENR, speed);
+	analogWrite(ENL, speed);
+	digitalWrite(R1,HIGH);
+	digitalWrite(R2,LOW);
+	digitalWrite(L1,HIGH);
+	digitalWrite(L2,LOW); 
 }
 
-void right(){
-  digitalWrite(ENA,HIGH);
-  digitalWrite(ENB,HIGH);
-  digitalWrite(IN1,HIGH);
-  digitalWrite(IN2,LOW);
-  digitalWrite(IN3,HIGH);
-  digitalWrite(IN4,LOW);
-  Serial.println("Right");
+void left(int speed){
+	analogWrite(ENR, speed);
+	analogWrite(ENL, speed);
+	digitalWrite(R1,LOW);
+	digitalWrite(R2,HIGH);
+	digitalWrite(L1,LOW);
+	digitalWrite(L2,HIGH);
 }
 
+void stop(){
+	digitalWrite(ENR,LOW);
+	digitalWrite(ENL,LOW);
+	digitalWrite(R1,LOW);
+	digitalWrite(R2,LOW);
+	digitalWrite(L1,LOW);
+	digitalWrite(L2,LOW);
+}
+
+void rightWheel(int speed, bool isForward){
+	analogWrite(ENR, speed);
+	if (isForward){
+		digitalWrite(R1,LOW); //set R1 hight level
+		digitalWrite(R2,HIGH);  //set R2 low level
+	}
+	else {
+		digitalWrite(R1,HIGH); //set R1 hight level
+		digitalWrite(R2,LOW);  //set R2 low level
+	}
+}
+
+void leftWheel(int speed, bool isForward){
+	analogWrite(ENL, speed);
+	if (isForward){
+		digitalWrite(L1,HIGH); //set R1 hight level
+		digitalWrite(L2,LOW);  //set R2 low level
+	}
+	else {
+		digitalWrite(L1,LOW); //set R1 hight level
+		digitalWrite(L2,HIGH);  //set R2 low level
+	}
+}
 //before execute loop() function, 
 //setup() function will execute first and only execute once
 void setup() {
   Serial.begin(9600);//open serial and set the baudrate
-  pinMode(IN1,OUTPUT);//before useing io pin, pin mode must be set first 
-  pinMode(IN2,OUTPUT);
-  pinMode(IN3,OUTPUT);
-  pinMode(IN4,OUTPUT);
-  pinMode(ENA,OUTPUT);
-  pinMode(ENB,OUTPUT);
+  pinMode(R1,OUTPUT);//before useing io pin, pin mode must be set first 
+  pinMode(R2,OUTPUT);
+  pinMode(L1,OUTPUT);
+  pinMode(L2,OUTPUT);
+  pinMode(ENR,OUTPUT);
+  pinMode(ENL,OUTPUT);
 }
 
 //Repeat execution
+char controlInput = 0;
+enum direction {Forward, Backward, Left, Right, Stop};
+direction dir = Stop;
+
 void loop() {
-  forward();  //go forward
-  delay(1000);//delay 1000 ms
-  back();     //go back
-  delay(1000);
-  left();     //turning left
-  delay(1000);
-  right();    //turning right
-  delay(1000);
+	leftWheel(125, false);
+	rightWheel(125, false);
+//	if (Serial.available() > 0){
+//		controlInput = Serial.read();		
+//		switch(controlInput){
+//			case 'w':
+//				dir = Forward;
+//				break;
+//			case 's':
+//				dir = Backward;
+//				break;
+//			case 'a':
+//				dir = Left;
+//				break;
+//			case 'd':
+//				dir = Right;
+//				break;
+//			case 'q':
+//				dir = Stop;
+//				break;
+//		}	
+//	}
+//	int speed = 120;
+//	switch(dir){
+//		case Forward:
+//			forward(speed);
+//			break;
+//		case Backward:
+//			back(speed);
+//			break;
+//		case Left:
+//			left(speed);
+//			break;
+//		case Right:
+//			right(speed);
+//			break;
+//		case Stop:
+//			stop();
+//			break;
+//		default:
+//			stop();
+//			break;
+//	}
 }
