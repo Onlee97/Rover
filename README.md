@@ -56,7 +56,12 @@ $ git clone https://github.com/JetsonHacksNano/installLibrealsense
 $ cd installLibrealsense
 $ ./buildLibrealsense.sh
 ```
-
+**Install Aduino IDEE**
+```bash
+$ git clone https://github.com/JetsonHacksNano/installArduinoIDE
+$ cd installArduinoIDE
+$ ./installArduinoIDE.sh
+```
 
 
 
