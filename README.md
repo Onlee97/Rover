@@ -62,6 +62,8 @@ The library will be installed to */usr/local*, Therefore to use the pyrealsense2
 ```bash
 $ export PYTHONPATH=$PYTHONPATH:/usr/local/lib
 ```
+*Note 1: the realsense repo suggest to apply kernal patches to install the library, but since I don't want to make change to kernel, I skipped that part and the result is still working fine*
+*Note 2: the instructions from jetsonHacks is convienient, however after installing using his build script, the jetson automatically log off, so I ended up having to re-flash the OS and start over*\
 Reference: 
 https://github.com/IntelRealSense/librealsense/blob/master/doc/installation.md
 https://github.com/IntelRealSense/librealsense/tree/master/wrappers/python
