@@ -15,7 +15,7 @@ ROS.\
 Intel Realsense.
 
 **Flashing the Jetson OS**\
-Using NVIDIA L4T32.3.1, JetPack 4.3\ 
+Using NVIDIA L4T32.3.1, JetPack 4.3\
 Reference: https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit
 
 **Install OpenCV**\
