@@ -49,14 +49,20 @@ $ ./buildOpenCV.sh |& tee openCV_build.log
 Reference: https://www.jetsonhacks.com/2019/11/22/opencv-4-cuda-on-jetson-nano/
 
 **Install Intel Realsense SDK**\
-The SDK are neccessary for the jetson to interact with the Depth Camera. The Depth Camera provide a 3D point cloud data which is very beneficial in multiple application. There are convienient way to install the SDK. However, if we want the library to support **Python** and **CUDA**, then we have to build from source.
+The SDK are neccessary for the jetson to interact with the Depth Camera. The Depth Camera provide a 3D point cloud data which is very beneficial in multiple application. There are convienient way to install the SDK. However, if we want the library to support **Python**, then we have to build from source.
 
 ```bash
-$ git clone https://github.com/JetsonHacksNano/installLibrealsense
-$ cd installLibrealsense
-$ ./buildLibrealsense.sh
+$ git clone https://github.com/IntelRealSense/librealsense.git
+$ mkdir build
+$ cd build
+$ cmake ../ -DBUILD_PYTHON_BINDINGS:bool=true -DCMAKE_BUILD_TYPE=Release
+$ sudo make uninstall && make clean && make -j4 && sudo make install
 ```
-**Install Aduino IDEE**
+The library will be installed to */usr/local*, Therefore to use the pyrealsense2 library, run the following line to add to .bashrc file
+```bash
+$ export PYTHONPATH=$PYTHONPATH:/usr/local/lib
+```
+**Install Aduino IDE**
 ```bash
 $ git clone https://github.com/JetsonHacksNano/installArduinoIDE
 $ cd installArduinoIDE
