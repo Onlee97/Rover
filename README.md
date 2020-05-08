@@ -15,8 +15,8 @@ ROS.\
 Intel Realsense.
 
 **Flashing the Jetson OS**\
-(https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit)
 Using NVIDIA L4T32.3.1, JetPack 4.3 
+Reference: https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit
 
 **Install OpenCV**\
 The JetPack (Jetson OS) comes with a built in OpenCV (installed in /usr/ folder). However, this OpenCV doesn't come with CUDA support. In order to have a more customized OpenCV, we should built it from source. The building process can take about 2.5 hours
@@ -62,6 +62,10 @@ The library will be installed to */usr/local*, Therefore to use the pyrealsense2
 ```bash
 $ export PYTHONPATH=$PYTHONPATH:/usr/local/lib
 ```
+Reference: 
+https://github.com/IntelRealSense/librealsense/blob/master/doc/installation.md
+https://github.com/IntelRealSense/librealsense/tree/master/wrappers/python
+
 **Install Aduino IDE**
 ```bash
 $ git clone https://github.com/JetsonHacksNano/installArduinoIDE
