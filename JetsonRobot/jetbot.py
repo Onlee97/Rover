@@ -11,16 +11,19 @@ class jetbot:
     def backward(self, speed = 1.0):
         speed = int(speed*255)
 
-    def leftWheel(self, speed = 1.0):
+    def left(self, speed = 1.0):
         speed = int(speed*255)
-        controlMsg = "L" + str(speed)
+        controlMsg = 'L' + str(speed) + '\n'
         self.serialLink.write(controlMsg.encode())
+#        self.displaySerial()
 
-
-    def rightWheel(self, speed = 1.0):
+    def right(self, speed = 1.0):
         speed = int(speed*255)
-        controlMsg = "R" + str(speed)
+        controlMsg = 'R' + str(speed) + '\n'
         self.serialLink.write(controlMsg.encode())
+#        self.displaySerial()
 
-
+    def displaySerial(self):
+        data = self.serialLink.readline()
+        print(data)
 
