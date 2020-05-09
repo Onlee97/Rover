@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import sys
-from jetbot import Robot
+#from jetbot import Robot
 import time
 
 
@@ -246,7 +246,7 @@ def gstreamer_pipeline(
         )
     )
 
-robot = Robot()
+#robot = Robot()
 def control_motor(distance):
     threshold = 30
     speed = 0.1

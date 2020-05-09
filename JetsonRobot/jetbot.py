@@ -1,6 +1,6 @@
 import serial
 
-class jetbot:
+class Rover:
     def __init__(self, _serialLink = "/dev/ttyACM0", _bandWidth = 9600):
         self.serialLink = serial.Serial(_serialLink, _bandWidth)
 
