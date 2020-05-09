@@ -64,8 +64,9 @@ void stop(){
 	digitalWrite(L2,LOW);
 }
 
-void rightWheel(int speed, bool isForward){
-	analogWrite(ENR, speed);
+void rightWheel(int speed){
+	bool isForward = (speed >= 0);
+	analogWrite(ENR, abs(speed));
 	if (isForward){
 		digitalWrite(R1,LOW); //set R1 hight level
 		digitalWrite(R2,HIGH);  //set R2 low level
@@ -76,8 +77,9 @@ void rightWheel(int speed, bool isForward){
 	}
 }
 
-void leftWheel(int speed, bool isForward){
-	analogWrite(ENL, speed);
+void leftWheel(int speed){
+	bool isForward = (speed >= 0);
+	analogWrite(ENL, abs(speed));
 	if (isForward){
 		digitalWrite(L1,HIGH); //set R1 hight level
 		digitalWrite(L2,LOW);  //set R2 low level
@@ -100,15 +102,25 @@ void setup() {
 }
 
 //Repeat execution
-char controlInput = 0;
+//char controlInput = 0;
+String controlInput = "";
+//char *controlInput;
 enum direction {Forward, Backward, Left, Right, Stop};
 direction dir = Stop;
 
 void loop() {
-	leftWheel(125, false);
-	rightWheel(125, false);
-//	if (Serial.available() > 0){
-//		controlInput = Serial.read();		
+//	Serial.println("Hello");
+//	delay(1000);
+//	leftWheel(125, false);
+//	rightWheel(125, false);
+	if (Serial.available() > 0){
+		controlInput = Serial.readString();
+		int speed = controlInput.substring(1).toInt();
+		char dir = controlInput[0];
+		if (dir == 'L') leftWheel(speed);
+		else rightWheel(speed);
+//		Serial.println(speed);
+//		Serial.println(controlInput);
 //		switch(controlInput){
 //			case 'w':
 //				dir = Forward;
@@ -126,7 +138,7 @@ void loop() {
 //				dir = Stop;
 //				break;
 //		}	
-//	}
+	}
 //	int speed = 120;
 //	switch(dir){
 //		case Forward:
