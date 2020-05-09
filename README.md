@@ -75,6 +75,9 @@ $ git clone https://github.com/JetsonHacksNano/installArduinoIDE
 $ cd installArduinoIDE
 $ ./installArduinoIDE.sh
 ```
+**Setup virtual environment**\
+The best practice to run and install Python application is inside a virtual environment. 
+
 
 
 
