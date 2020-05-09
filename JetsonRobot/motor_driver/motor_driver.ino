@@ -101,27 +101,27 @@ void setup() {
   pinMode(ENL,OUTPUT);
 }
 
-//Repeat execution
-//char controlInput = 0;
-String controlInput = "";
-//char *controlInput;
 enum direction {Forward, Backward, Left, Right, Stop};
 direction dir = Stop;
 
 void loop() {
-//	Serial.println("Hello");
-//	delay(1000);
-//	leftWheel(125, false);
-//	rightWheel(125, false);
 	if (Serial.available() > 0){
-		controlInput = Serial.readString();
-		int speed = controlInput.substring(1).toInt();
-		char dir = controlInput[0];
-		if (dir == 'L') leftWheel(speed);
-		else rightWheel(speed);
-//		Serial.println(speed);
-//		Serial.println(controlInput);
-//		switch(controlInput){
+		static String controlInput = "";
+		char c = Serial.read();
+		if (c == '\n'){
+			controlInput += '\0';
+			int speed = controlInput.substring(1).toInt();
+			char dir = controlInput[0];
+			if (dir == 'L') leftWheel(speed);
+			else rightWheel(speed);
+			Serial.println(speed);
+			Serial.println(controlInput);
+			controlInput = "";
+		}
+		else if (c != -1){
+			controlInput += c;
+		}
+//		switch(controlInput[0]){
 //			case 'w':
 //				dir = Forward;
 //				break;
