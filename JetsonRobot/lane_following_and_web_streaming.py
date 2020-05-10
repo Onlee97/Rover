@@ -74,9 +74,11 @@ def control_motor(distance = 0):
     #robot.right(0.5)
     print("Distance: ", distance, "left: ", left_speed, "right: ", right_speed)
 
-
+global old_distance, prev_time
+old_distance = 0
+prev_time = 0
 def captureFrames():
-    global video_frame, thread_lock
+    global video_frame, thread_lock, old_distance, prev_time
     
     print(gstreamer_pipeline(flip_method=0))
     
@@ -86,13 +88,17 @@ def captureFrames():
         return_key, frame = video_capture.read()
         if not return_key:
             break
-        
-        #control_motor()
-        #Process image
         try:
+            #Apply lane detection, return the processed image and the distance 
+            #between the robot direction and center of lane
             frame, distance = ld.detect_lane(frame)
-            print("control")
-            control_motor(distance)
+
+            #Sending control signal to MotorDriver in a constant rate loop
+            cur_time = time.time()
+            if (distance != old_distance and cur_time-prev_time >= 0.1):
+                prev_time = cur_time
+                control_motor(distance)
+                old_distance = distance
         except:
             print("None Detected")
             # Create a copy of the frame and store it in the global variable,
@@ -103,6 +109,7 @@ def captureFrames():
         key = cv2.waitKey(30) & 0xff
         if key == 27:
             break
+    robot.stop()
     cv2.destroyAllWindows()
     video_capture.release()
         
