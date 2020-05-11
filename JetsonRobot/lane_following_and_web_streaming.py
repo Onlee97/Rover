@@ -59,7 +59,7 @@ def control_motor(distance = 0):
     #print("control2")
     global robot
     threshold = 30
-    speed = 0.5
+    speed = 0.3
     speedDif = speed*((2*abs(distance))/320)
     left_speed = speed*1.5
     right_speed = speed*1.5
@@ -69,7 +69,7 @@ def control_motor(distance = 0):
     elif (distance > threshold): #turn Left
         left_speed = speed
         right_speed = speed + speedDif
-    #robot.left(left_speed)
+    robot.left(left_speed)
     robot.right(right_speed)
     #robot.right(0.5)
     print("Distance: ", distance, "left: ", left_speed, "right: ", right_speed)
@@ -105,7 +105,7 @@ def captureFrames():
             # with thread safe access
         with thread_lock:
             video_frame = frame.copy()
-        cv2.imshow('lane', frame)
+        #cv2.imshow('lane', frame)
         key = cv2.waitKey(30) & 0xff
         if key == 27:
             break

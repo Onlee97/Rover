@@ -9,12 +9,16 @@ class Rover:
         self.right(0)
 
     def left(self, speed = 1.0):
+        speed = min(1.0, speed)
+        speed = max(-1.0, speed)
         speed = int(speed*255)
         controlMsg = 'L' + str(speed) + '\n'
         self.serialLink.write(controlMsg.encode())
 #        self.displaySerial()
 
     def right(self, speed = 1.0):
+        speed = min(1.0, speed)
+        speed = max(-1.0, speed)
         speed = int(speed*255)
         controlMsg = 'R' + str(speed) + '\n'
         self.serialLink.write(controlMsg.encode())

@@ -114,8 +114,6 @@ void loop() {
 			char dir = controlInput[0];
 			if (dir == 'L') leftWheel(speed);
 			else rightWheel(speed);
-			Serial.println(speed);
-			Serial.println(controlInput);
 			controlInput = "";
 		}
 		else if (c != -1){
