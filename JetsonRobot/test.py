@@ -7,13 +7,13 @@ import curses
 global stop_threads, time_elapse
 def run():
     while True:
-        #print("running", flush=True)
+        print("running")
         time.sleep(1)
         global stop_threads, time_elapse
         time_elapse += 1
         if stop_threads:
             break
-    #print("thread safely stop", flush=True)
+    print("thread safely stop", flush=True)
 
 if __name__ == "__main__":
     global time_elapse, stop_threads
@@ -21,17 +21,19 @@ if __name__ == "__main__":
     time_elapse = 0
     thread = threading.Thread(target=run)
     thread.daemon = True
+    thread.start()
 
     screen = curses.initscr()
     curses.noecho()
-    curses.cbreak()
+#    curses.cbreak()
     screen.keypad(True)
     try:
         while True:
+            time.sleep(0.5)
             char = screen.getch()
             if char == 27:
                 stop_threads = True
-                break
+    except KeyboardInterrupt:
         print("stop main")
         print(time_elapse)
     finally: 
@@ -40,5 +42,5 @@ if __name__ == "__main__":
         screen.keypad(0)
         curses.echo()
         curses.endwin()
-
+        print("Bye")
 
