@@ -78,7 +78,7 @@ global old_distance, prev_time
 old_distance = 0
 prev_time = 0
 def captureFrames():
-    global video_frame, thread_lock, old_distance, prev_time
+    global video_frame, thread_lock, old_distance, prev_time, stop_thread
     
     print(gstreamer_pipeline(flip_method=0))
     
@@ -99,15 +99,17 @@ def captureFrames():
                 prev_time = cur_time
                 control_motor(distance)
                 old_distance = distance
-        except:
-            print("None Detected")
-            # Create a copy of the frame and store it in the global variable,
-            # with thread safe access
+        except ValueError:
+            print("No lane Detected")
+            #break
+        # Create a copy of the frame and store it in the global variable,
+        # with thread safe access
         with thread_lock:
             video_frame = frame.copy()
         #cv2.imshow('lane', frame)
         key = cv2.waitKey(30) & 0xff
         if key == 27:
+            print("stop")
             break
     robot.stop()
     cv2.destroyAllWindows()
@@ -147,3 +149,4 @@ if __name__ == '__main__':
     # While it can be run on any feasible IP, IP = 0.0.0.0 renders the web app on
     # the host machine's localhost and is discoverable by other machines on the same network 
     app.run("0.0.0.0", port="8000")
+
