@@ -5,6 +5,7 @@ from flask import Response, Flask
 import sys
 import image_processing.lane_detection as ld
 from jetbot import Rover
+import curses
 
 # Image frame sent to the Flask object
 global video_frame
@@ -13,6 +14,11 @@ video_frame = None
 # Use locks for thread-safe viewing of frames in multiple browsers
 global thread_lock 
 thread_lock = threading.Lock()
+
+# threadkill flag
+global stop_thread
+stop_thread = False
+
 
 # Create global robot object
 global robot
@@ -79,7 +85,7 @@ old_distance = 0
 prev_time = 0
 def captureFrames():
     global video_frame, thread_lock, old_distance, prev_time, stop_thread
-    
+    stop_thread = False 
     print(gstreamer_pipeline(flip_method=0))
     
     # Video capturing from OpenCV
@@ -106,10 +112,13 @@ def captureFrames():
         # with thread safe access
         with thread_lock:
             video_frame = frame.copy()
-        #cv2.imshow('lane', frame)
+        cv2.imshow('lane', frame)
         key = cv2.waitKey(30) & 0xff
         if key == 27:
             print("stop")
+            break
+        if stop_thread:
+            print("Stop video capture")
             break
     robot.stop()
     cv2.destroyAllWindows()
@@ -131,6 +140,25 @@ def encodeFrame():
         yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + 
             bytearray(encoded_image) + b'\r\n')
 
+def captureKeyboard():
+    global stop_thread
+    screen = curses.initscr()
+    curses.noecho()
+    curses.cbreak()
+    screen.keypad(True)
+    try:
+        while True:
+            char = screen.getch()
+            if char == 27:
+                stop_thread = True
+                break
+    finally:
+        #Close down curses properly, inc turn echo back on!
+        curses.nocbreak()
+        screen.keypad(0)
+        curses.echo()
+        curses.endwin()
+
 @app.route("/")
 def streamFrames():
     return Response(encodeFrame(), mimetype = "multipart/x-mixed-replace; boundary=frame")
@@ -142,8 +170,12 @@ if __name__ == '__main__':
     process_thread = threading.Thread(target=captureFrames)
     process_thread.daemon = True
 
+    #keycap_thread = threading.Thread(target=captureKeyboard)
+    #keycap_thread.daemon = True
+    
     # Start the thread
     process_thread.start()
+    #keycap_thread.start()
 
     # start the Flask Web Application
     # While it can be run on any feasible IP, IP = 0.0.0.0 renders the web app on
