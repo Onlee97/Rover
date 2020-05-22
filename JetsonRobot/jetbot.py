@@ -78,17 +78,17 @@ class Rover:
         distance = distance - offset
         threshold = 20
         speed = 0.5
-        s = 0.3
+        s = 0.4
         p = 1
-        speedDif = 2*abs(distance)/320
+        speedDif = 1 + 2*abs(distance)/320
         left_speed = s
         right_speed = s
         if (distance < -threshold):  #turn right
-            left_speed = speed + speedDif
-            right_speed = speed - speedDif
+            left_speed = speed*speedDif
+            right_speed = speed
         elif (distance > threshold): #turn Left
-            right_speed = speed + speedDif
-            left_speed = speed - speedDif
+            right_speed = speed*speedDif
+            left_speed = speed
 
         self.left(left_speed)
         self.right(right_speed)

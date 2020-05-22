@@ -50,7 +50,7 @@ def captureFrames():
 			# with thread safe access
 			with thread_lock:
 				video_frame = images.copy()
-			cv2.imshow('name', images)
+		#	cv2.imshow('name', images)
 			key = cv2.waitKey(30) & 0xff
 			if key == 27:
 				break

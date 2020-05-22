@@ -1,7 +1,7 @@
 # import curses and GPIO
 import curses
 import time
-import serial
+from jetbot import Rover
 
 # Get the curses window, turn off echoing of keyboard to screen, turn on
 # instant (no waiting) key response, and use special values for cursor keys
@@ -11,35 +11,40 @@ curses.cbreak()
 screen.keypad(True)
 
 #Initialize
-ser = serial.Serial("/dev/ttyACM0", 9600)
 delaytime = 0.2
+speed = 0.7
+robot = Rover()
 while True:   
     char = screen.getch()
     if char == 27:
             break
     elif char == ord('w'):
             print("w")
-            ser.write(b'w')
+            robot.left(speed)
+            robot.right(speed)
             time.sleep(delaytime) 
 
     elif char == ord('s'):
             print("s")
-            ser.write(b's')
+            robot.left(-speed)
+            robot.right(-speed)
             time.sleep(delaytime) 
 
     elif char == ord('d'):
             print("d")
-            ser.write(b'd')
+            robot.left(speed)
+            robot.right(-speed)
             time.sleep(delaytime) 
 
     elif char == ord('a'):
             print("a")
-            ser.write(b'a')
+            robot.left(-speed)
+            robot.right(speed)
             time.sleep(delaytime) 
 
     elif char == ord('q'): 
             print("STOP")
-            ser.write(b'q')
+            robot.stop()
             time.sleep(delaytime) 
 			 
 #Close down curses properly, inc turn echo back on!
