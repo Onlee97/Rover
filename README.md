@@ -73,7 +73,18 @@ https://github.com/IntelRealSense/librealsense/tree/master/wrappers/python
 ROS is used as framework for this whole project. The installation can be followed exactly in this link:\
 http://wiki.ros.org/melodic/Installation/Ubuntu
 
-*ros-melodic-desktop should be installed, as it has all the major functionalities that we needs, the full version is too large and consume too many resources for this device.\
+*ros-melodic-desktop should be installed, as it has all the major functionalities that we needs, the full version is too large and consume too many resources for this device.
+
+**Install Realsense ROS Wrapper**\
+The ROS wrapper allows the realsense to be used with ROS. This is neccessary for the robot to perform SLAM and Navigation.
+The detail installation can be found here: https://github.com/IntelRealSense/realsense-ros
+
+When running the 'catkin_make' command, two issues might occurs:\
+1.cv-bridge cannot find OpenCV: fix this by edit the cv-bridgeConfig.cmake file to include the right location of OpenCV
+2.ddynamic_reconfigure is not found: this can be fixed by 
+```bash
+$ sudo apt-get install ros-melodic-ddynamic-reconfigure
+```
 
 **Install Aduino IDE**
 ```bash
