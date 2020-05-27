@@ -71,7 +71,7 @@ https://github.com/IntelRealSense/librealsense/tree/master/wrappers/python
 
 **Install ROS**\
 ROS is used as framework for this whole project. The installation can be followed exactly in this link:\
-http://wiki.ros.org/melodic/Installation/Ubuntu\
+http://wiki.ros.org/melodic/Installation/Ubuntu
 *ros-melodic-desktop should be installed, as it has all the major functionalities that we needs, the full version is too large and consume too many resources for this device.\
 
 **Install Aduino IDE**
