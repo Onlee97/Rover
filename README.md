@@ -1,7 +1,8 @@
-# Rover
+# Rover 
 This project aims to create an mobile robot that can navigate autonomously any indoor environment.
 This repo contains the core codes of the robot, and also neccessary instruction for anyone that interested in replicate or further develop this robot
 
+# Installation
 **Hardware**\
 *Version 3*\
 The robot has 4 DC motors, controlled by an L298N (Motor Driver)\
@@ -92,6 +93,5 @@ $ git clone https://github.com/JetsonHacksNano/installArduinoIDE
 $ cd installArduinoIDE
 $ ./installArduinoIDE.sh
 ```
-
-
+# Demo
 
